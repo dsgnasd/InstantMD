@@ -188,81 +188,34 @@ body,
 
 /* ── Task list checkboxes ─────────────────────────────────────────── */
 
-/* Outer task list: no extra indent */
+/* Outer task list: items align with body text */
 .preview ul.contains-task-list {
   padding-left: 0;
 }
-/* Nested task lists restore 1.5em indent */
+/* Nested task lists restore standard indent */
 .preview ul.contains-task-list ul.contains-task-list {
   padding-left: 1.5em;
 }
 
-/* li: no bullet, normal block layout */
 .preview li.task-list-item {
   list-style: none;
   padding-left: 0;
 }
 
-/* Hidden input — only carries data-task-idx, no visual presence */
+/* Native checkbox styled with accent-color — modern, accessible, simple */
 .preview .task-list-item-checkbox {
-  display: none;
-}
-
-/* Visual checkbox span — always inline, text wraps naturally after */
-.preview .task-check-visual {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 0.9em;
-  height: 0.9em;
+  width: 0.95em;
+  height: 0.95em;
+  margin: 0 0.45em 0 0;
   vertical-align: middle;
   position: relative;
-  top: -0.07em;
-  margin-right: 0.35em;
-  border: 1.5px solid #d6d3d1;  /* stone-300 */
-  border-radius: 3px;
-  background-color: #ffffff;
+  top: -0.06em;
   cursor: pointer;
-  font-size: 0.6em;
-  font-weight: 900;
-  color: transparent;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  accent-color: #44403c;          /* stone-700 */
 }
 
-.preview .task-check-visual:hover {
-  border-color: #a8a29e;          /* stone-400 */
-}
-
-/* Checked — class set directly in markdownParser, no sibling selector */
-.preview .task-check-visual.task-checked {
-  background-color: #44403c;      /* stone-700 */
-  border-color: #44403c;
-  color: white;
-}
-
-.preview .task-check-visual.task-checked:hover {
-  background-color: #292524;      /* stone-800 */
-  border-color: #292524;
-}
-
-/* ── Dark mode ── */
-.dark .preview .task-check-visual {
-  border-color: #52525b;          /* zinc-600 */
-  background-color: transparent;
-}
-
-.dark .preview .task-check-visual:hover {
-  border-color: #71717a;          /* zinc-500 */
-}
-
-.dark .preview .task-check-visual.task-checked {
-  background-color: #71717a;      /* zinc-500 */
-  border-color: #71717a;
-}
-
-.dark .preview .task-check-visual.task-checked:hover {
-  background-color: #a1a1aa;      /* zinc-400 */
-  border-color: #a1a1aa;
+.dark .preview .task-list-item-checkbox {
+  accent-color: #a1a1aa;          /* zinc-400 */
 }
 
 /* ──────────────────────────────────────────────────────────────────── */

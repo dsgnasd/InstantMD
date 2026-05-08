@@ -188,70 +188,91 @@ body,
 
 /* ── Task list checkboxes ─────────────────────────────────────────── */
 
-/* Remove bullet marker from task list items */
+/* li: no bullet, reserve left space for the checkbox */
 .preview li.task-list-item {
   list-style: none;
   margin-left: -1.25em;
-  padding-left: 0;
+  padding-left: 1.4em;
+  position: relative;
 }
 
-/* Hide native checkbox, draw custom one */
+/* The actual <input> — invisible, sits on top for click events */
 .preview .task-list-item-checkbox {
   -webkit-appearance: none;
   appearance: none;
-  display: inline-block;
-  width: 0.875em;
-  height: 0.875em;
-  margin-right: 0.45em;
-  vertical-align: middle;
-  position: relative;
-  top: -0.08em;
-  flex-shrink: 0;
-  /* light: stone-300 border, white bg */
-  border: 1.5px solid #d6d3d1;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.9em;
+  height: 0.9em;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Visual proxy: the <span> rendered right after the <input> */
+.preview .task-check-visual {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.9em;
+  height: 0.9em;
+  border: 1.5px solid #d6d3d1;   /* stone-300 */
   border-radius: 3px;
   background-color: #ffffff;
-  cursor: pointer;
+  pointer-events: none;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.preview .task-list-item-checkbox:checked {
-  /* light: stone-700 fill with white checkmark */
-  background-color: #44403c;
+/* Hover on unchecked */
+.preview .task-list-item-checkbox:hover + .task-check-visual {
+  border-color: #a8a29e;          /* stone-400 */
+}
+
+/* Checked fill */
+.preview .task-list-item-checkbox:checked + .task-check-visual {
+  background-color: #44403c;      /* stone-700 */
   border-color: #44403c;
+}
+
+/* Checkmark via ::before on the visual span */
+.preview .task-list-item-checkbox:checked + .task-check-visual::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
   background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNSA1IDQgNy41IDguNSAyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 75%;
+  background-size: 72%;
 }
 
-.preview .task-list-item-checkbox:hover:not(:checked) {
-  border-color: #a8a29e; /* stone-400 */
-}
-
-.preview .task-list-item-checkbox:checked:hover {
-  background-color: #292524; /* stone-800 */
+/* Hover on checked */
+.preview .task-list-item-checkbox:checked:hover + .task-check-visual {
+  background-color: #292524;      /* stone-800 */
   border-color: #292524;
 }
 
-/* dark mode */
-.dark .preview .task-list-item-checkbox {
-  border-color: #52525b; /* zinc-600 */
+/* ── Dark mode ── */
+.dark .preview .task-check-visual {
+  border-color: #52525b;          /* zinc-600 */
   background-color: transparent;
 }
 
-.dark .preview .task-list-item-checkbox:checked {
-  /* dark: zinc-300 fill with dark checkmark — or keep white */
-  background-color: #71717a; /* zinc-500 */
+.dark .preview .task-list-item-checkbox:hover + .task-check-visual {
+  border-color: #71717a;          /* zinc-500 */
+}
+
+.dark .preview .task-list-item-checkbox:checked + .task-check-visual {
+  background-color: #71717a;      /* zinc-500 */
   border-color: #71717a;
 }
 
-.dark .preview .task-list-item-checkbox:hover:not(:checked) {
-  border-color: #71717a; /* zinc-500 */
-}
-
-.dark .preview .task-list-item-checkbox:checked:hover {
-  background-color: #a1a1aa; /* zinc-400 */
+.dark .preview .task-list-item-checkbox:checked:hover + .task-check-visual {
+  background-color: #a1a1aa;      /* zinc-400 */
   border-color: #a1a1aa;
 }
 

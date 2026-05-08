@@ -235,17 +235,18 @@ body,
   border-color: #44403c;
 }
 
-/* Checkmark via CSS borders — no images, works everywhere */
+/* Checkmark */
 .preview .task-list-item-checkbox:checked + .task-check-visual::after {
-  content: '';
+  content: '✓';
   position: absolute;
-  left: 22%;
-  top: 8%;
-  width: 30%;
-  height: 52%;
-  border: solid white;
-  border-width: 0 1.5px 1.5px 0;
-  transform: rotate(45deg);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.68em;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .preview .task-list-item-checkbox:checked + .task-check-visual:hover {

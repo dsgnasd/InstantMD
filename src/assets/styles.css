@@ -197,14 +197,10 @@ body,
   padding-left: 1.5em;
 }
 
-/* li: flex row, no bullet */
+/* li: no bullet, normal block layout */
 .preview li.task-list-item {
   list-style: none;
-  margin: 0.35em 0;
   padding-left: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.5em;
 }
 
 /* Input hidden from layout — only keeps :checked state for CSS */
@@ -212,15 +208,15 @@ body,
   display: none;
 }
 
-/* Visual checkbox — the element the user actually sees and clicks */
+/* Visual checkbox — inline so text wraps naturally after it */
 .preview .task-check-visual {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0.875em;
+  display: inline-block;
   width: 0.875em;
   height: 0.875em;
-  margin-top: 0.22em;            /* align with first line of text */
+  vertical-align: middle;
+  position: relative;
+  top: -0.08em;
+  margin-right: 0.35em;
   flex-shrink: 0;
   border: 1.5px solid #d6d3d1;  /* stone-300 */
   border-radius: 3px;

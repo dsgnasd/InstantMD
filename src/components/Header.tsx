@@ -10,11 +10,9 @@ type HeaderProps = {
   setMenuOpen: (open: boolean) => void;
   onNewNote: () => void;
   onDownload: () => void;
-  minimalEditing: boolean;
-  onToggleMinimalEditing: () => void;
 };
 
-export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, minimalEditing, onToggleMinimalEditing }: HeaderProps) => {
+export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload }: HeaderProps) => {
   const { fontSize, setFontSize, font, setFont, minimalMode, setMinimalMode } =
     usePreferencesContext();
 
@@ -30,30 +28,6 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
           </span>
         </div>
         <div className="flex items-center gap-1">
-          <div className="invisible w-10 h-10" aria-hidden="true" />
-          <Tooltip text={minimalEditing ? 'Switch to preview' : 'Switch to editor'}>
-          <button
-            onClick={onToggleMinimalEditing}
-            aria-label={minimalEditing ? 'Switch to preview' : 'Switch to editor'}
-            className={`hidden sm:flex items-center gap-1.5 p-2 rounded-xl text-sm transition-opacity duration-200 text-stone-600 dark:text-zinc-300 hover:bg-stone-100/60 dark:hover:bg-white/5 ${
-              minimalEditing ? 'opacity-80' : 'opacity-25 hover:opacity-80'
-            }`}
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-              />
-            </svg>
-          </button>
-          </Tooltip>
           <button
             onClick={() => setMinimalMode(false)}
             aria-label="Exit minimal mode"

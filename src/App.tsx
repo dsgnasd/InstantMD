@@ -36,7 +36,6 @@ export const App = () => {
   const [helpOpen, setHelpOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHeadingId, setActiveHeadingId] = useState<string | null>(null);
-  const [minimalEditing, setMinimalEditing] = useState(false);
 
   const { rendered: hintRendered, visible: hintVisible } = useAutoHideToast(
     minimalMode,
@@ -46,7 +45,6 @@ export const App = () => {
 
   const exitMinimalMode = useCallback(() => {
     setMinimalMode(false);
-    setMinimalEditing(false);
   }, [setMinimalMode]);
   useEscapeKey(exitMinimalMode, minimalMode);
   useBodyScrollLock(menuOpen);
@@ -136,20 +134,13 @@ export const App = () => {
         onDownload={download}
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
-        minimalEditing={minimalEditing}
-        onToggleMinimalEditing={() => setMinimalEditing((v) => !v)}
       />
 
       {isMobile && <PanelTabs active={activePanel} onChange={setActivePanel} />}
 
       <main className="relative flex flex-1 min-h-0 overflow-hidden">
         {minimalMode ? (
-          <MinimalView
-            content={content}
-            editing={minimalEditing}
-            onChange={handleChange}
-            onCopied={() => showToast('Copied to clipboard')}
-          />
+          <MinimalView content={content} />
         ) : (
           <SplitView
             swapped={panelsSwapped}

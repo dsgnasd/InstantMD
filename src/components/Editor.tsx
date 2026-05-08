@@ -9,10 +9,9 @@ type EditorProps = {
   value: string;
   onChange: (val: string) => void;
   onCopied?: () => void;
-  hideCopy?: boolean;
 };
 
-export const Editor = memo(({ value, onChange, onCopied, hideCopy }: EditorProps) => {
+export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
   const taRef = useRef<HTMLTextAreaElement>(null);
   const { pushHistory, undo, redo } = useUndoHistory(value, onChange);
   useEditorKeyboard(taRef, value, onChange, pushHistory, undo, redo);
@@ -72,7 +71,7 @@ export const Editor = memo(({ value, onChange, onCopied, hideCopy }: EditorProps
         />
       )}
       <div className="relative flex-1">
-        {!isEmpty && !hideCopy && (
+        {!isEmpty && (
           <div className="absolute top-2 right-2 z-10 flex items-center gap-0.5">
             {showPasteButton && (
               <Tooltip text="Paste from clipboard" side="left">

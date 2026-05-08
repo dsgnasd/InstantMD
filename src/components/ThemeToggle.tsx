@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const themeKey = 'md-editor-theme';
+const themeKey = 'instantmd-theme';
 
 export const ThemeToggle = () => {
   const [dark, setDark] = useState(() => {

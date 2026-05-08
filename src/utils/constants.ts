@@ -1,5 +1,5 @@
-export const storageKey = 'md-editor-content';
-export const fontKey = 'md-editor-font';
+export const storageKey = 'instantmd-content';
+export const fontKey = 'instantmd-font';
 
 export const fonts = [
   { id: 'inter', label: 'Inter', family: "'Inter', system-ui, sans-serif", category: 'Без засечек' },

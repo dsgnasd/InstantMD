@@ -2,8 +2,8 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import type { Note } from '../types';
 import { DEFAULT_NOTE_CONTENT } from '../utils/config';
 
-const OPEN_NOTE_IDS_KEY = 'md-editor-open-note-ids';
-const NOTE_PREFIX = 'md-editor-note-';
+const OPEN_NOTE_IDS_KEY = 'instantmd-open-note-ids';
+const NOTE_PREFIX = 'instantmd-note-';
 
 const isValidNoteId = (id: string): boolean => /^[a-z0-9]+$/i.test(id);
 

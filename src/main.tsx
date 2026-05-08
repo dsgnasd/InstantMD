@@ -6,8 +6,30 @@ import { PreferencesProvider } from './context/PreferencesContext';
 import { ToastProvider } from './context/ToastContext';
 import './assets/styles.css';
 
+const migrateLegacyKeys = () => {
+  try {
+    const OLD_PREFIX = 'md-editor-';
+    const NEW_PREFIX = 'instantmd-';
+    const oldKeys: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith(OLD_PREFIX)) oldKeys.push(k);
+    }
+    for (const oldKey of oldKeys) {
+      const newKey = NEW_PREFIX + oldKey.slice(OLD_PREFIX.length);
+      if (localStorage.getItem(newKey) === null) {
+        const val = localStorage.getItem(oldKey);
+        if (val !== null) localStorage.setItem(newKey, val);
+      }
+      localStorage.removeItem(oldKey);
+    }
+  } catch (err) {
+    console.error('Failed to migrate localStorage keys:', err);
+  }
+};
+
 const initTheme = () => {
-  const saved = localStorage.getItem('md-editor-theme');
+  const saved = localStorage.getItem('instantmd-theme');
   if (saved === 'dark') {
     document.documentElement.classList.add('dark');
   } else if (saved === 'light') {
@@ -19,7 +41,7 @@ const initTheme = () => {
 
 const migrateLocalStorage = () => {
   try {
-    const NOTE_PREFIX = 'md-editor-note-';
+    const NOTE_PREFIX = 'instantmd-note-';
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (!key || !key.startsWith(NOTE_PREFIX)) continue;
@@ -36,11 +58,12 @@ const migrateLocalStorage = () => {
   }
 };
 
+migrateLegacyKeys();
 initTheme();
 migrateLocalStorage();
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  const saved = localStorage.getItem('md-editor-theme');
+  const saved = localStorage.getItem('instantmd-theme');
   if (!saved) {
     if (e.matches) {
       document.documentElement.classList.add('dark');

@@ -23,6 +23,7 @@ export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
   const [dropZoneState, setDropZoneState] = useState<'expanded' | 'collapsing' | 'collapsed'>(
     shouldShowDropZone ? 'expanded' : 'collapsed',
   );
+  const [pasteIconVisible, setPasteIconVisible] = useState(!shouldShowDropZone);
   const prevShouldShow = useRef(shouldShowDropZone);
 
   useEffect(() => {
@@ -33,6 +34,16 @@ export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
     }
     prevShouldShow.current = shouldShowDropZone;
   }, [shouldShowDropZone]);
+
+  useEffect(() => {
+    if (dropZoneState === 'collapsing') {
+      const t = setTimeout(() => setPasteIconVisible(true), 150);
+      return () => clearTimeout(t);
+    }
+    if (dropZoneState === 'expanded') {
+      setPasteIconVisible(false);
+    }
+  }, [dropZoneState]);
 
   const handleCopy = useCallback(async () => {
     if (!value) return;
@@ -59,7 +70,7 @@ export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
   }, []);
 
   const showDropZone = dropZoneState === 'expanded' || dropZoneState === 'collapsing';
-  const showPasteButton = dropZoneState === 'collapsed' && !isEmpty;
+  const showPasteButton = pasteIconVisible && !isEmpty;
 
   return (
     <div className="w-full h-full overflow-auto relative flex flex-col">
@@ -72,7 +83,7 @@ export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
       )}
       <div className="relative flex-1">
         {!isEmpty && (
-          <div className="absolute top-2 right-2 z-10 flex items-center gap-0.5">
+          <div className="absolute top-2 right-2 z-10 flex flex-col items-center gap-0.5">
             {showPasteButton && (
               <Tooltip text="Paste from clipboard" side="left">
               <button

@@ -44,12 +44,12 @@ export const Footer = memo(({ wordCount, onSwapPanels, onHelpOpen }: FooterProps
         </button>
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-[11px] text-stone-500 dark:text-zinc-400 px-2 tabular-nums font-medium">
+        <span className="text-xs text-stone-500 dark:text-zinc-400 px-2 tabular-nums">
           {formatWords(wordCount)}
         </span>
         <button
           onClick={onHelpOpen}
-          className="px-2.5 py-1 rounded-lg text-[11px] font-medium text-stone-500 dark:text-zinc-400 hover:text-stone-800 dark:hover:text-zinc-200 hover:bg-stone-100 dark:hover:bg-white/5 transition-all duration-200"
+          className="px-2.5 py-1 rounded-lg text-xs text-stone-500 dark:text-zinc-400 hover:text-stone-800 dark:hover:text-zinc-200 hover:bg-stone-100 dark:hover:bg-white/5 transition-all duration-200"
         >
           Markdown tips
         </button>

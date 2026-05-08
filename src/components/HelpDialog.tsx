@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { createPortal } from 'react-dom';
 import { useEscapeKey } from '../hooks/useEscapeKey';
+import { Tooltip } from './Tooltip';
 import md from '../utils/markdownParser';
 
 const exampleMarkdown = `# Заголовок первого уровня
@@ -117,6 +118,7 @@ export const HelpDialog = memo(({ open, onClose }: HelpDialogProps) => {
           <h2 id="help-dialog-title" className="text-lg font-semibold text-stone-800 dark:text-zinc-100">
             Markdown — шпаргалка
           </h2>
+          <Tooltip text="Close" side="left">
           <button
             onClick={onClose}
             aria-label="Close dialog"
@@ -126,6 +128,7 @@ export const HelpDialog = memo(({ open, onClose }: HelpDialogProps) => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
+          </Tooltip>
         </div>
         <div className="flex-1 overflow-auto p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

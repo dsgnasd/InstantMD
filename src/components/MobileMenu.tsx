@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import { fonts } from '../utils/constants';
 import { ThemeToggle } from './ThemeToggle';
+import { Tooltip } from './Tooltip';
 import { usePreferencesContext } from '../context/PreferencesContext';
 import { useEscapeKey } from '../hooks/useEscapeKey';
 import { FONT_SIZE } from '../utils/config';
@@ -56,6 +57,7 @@ export const MobileMenu = memo(({ open, onClose, onNewNote, onDownload, onHelpOp
           <div className="flex items-center justify-between px-4 py-4 rounded-xl hover:bg-stone-100 dark:hover:bg-white/5 transition-all h-14">
             <span className="text-sm text-stone-700 dark:text-zinc-200">Font Size</span>
             <div className="flex items-center gap-1">
+              <Tooltip text="Decrease font size">
               <button
                 onClick={() => setFontSize(fontSize - 1)}
                 disabled={fontSize <= FONT_SIZE.min}
@@ -64,9 +66,11 @@ export const MobileMenu = memo(({ open, onClose, onNewNote, onDownload, onHelpOp
               >
                 −
               </button>
+              </Tooltip>
               <span className="w-6 text-center text-sm font-medium text-stone-800 dark:text-zinc-100">
                 {fontSize}
               </span>
+              <Tooltip text="Increase font size">
               <button
                 onClick={() => setFontSize(fontSize + 1)}
                 disabled={fontSize >= FONT_SIZE.max}
@@ -75,6 +79,7 @@ export const MobileMenu = memo(({ open, onClose, onNewNote, onDownload, onHelpOp
               >
                 +
               </button>
+              </Tooltip>
             </div>
           </div>
 

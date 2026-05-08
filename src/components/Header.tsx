@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { FontSelector } from './FontSelector';
+import { Tooltip } from './Tooltip';
 import { usePreferencesContext } from '../context/PreferencesContext';
 import { FONT_SIZE } from '../utils/config';
 
@@ -30,6 +31,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
         </div>
         <div className="flex items-center gap-1">
           <div className="invisible w-10 h-10" aria-hidden="true" />
+          <Tooltip text={minimalEditing ? 'Switch to preview' : 'Switch to editor'}>
           <button
             onClick={onToggleMinimalEditing}
             aria-label={minimalEditing ? 'Switch to preview' : 'Switch to editor'}
@@ -51,6 +53,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
               />
             </svg>
           </button>
+          </Tooltip>
           <button
             onClick={() => setMinimalMode(false)}
             aria-label="Exit minimal mode"
@@ -130,6 +133,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
         <div className="hidden sm:flex items-center gap-1">
           <ThemeToggle />
           <div className="flex items-center gap-0.5">
+            <Tooltip text="Decrease font size">
             <button
               onClick={() => setFontSize(fontSize - 1)}
               disabled={fontSize <= FONT_SIZE.min}
@@ -138,9 +142,11 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
             >
               −
             </button>
+            </Tooltip>
             <span className="w-6 text-center text-sm font-medium text-stone-800 dark:text-zinc-100">
               {fontSize}
             </span>
+            <Tooltip text="Increase font size">
             <button
               onClick={() => setFontSize(fontSize + 1)}
               disabled={fontSize >= FONT_SIZE.max}
@@ -149,6 +155,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
             >
               +
             </button>
+            </Tooltip>
           </div>
           <FontSelector font={font} onFontChange={setFont} />
         </div>
@@ -181,6 +188,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
           <span className="hidden sm:inline">Minimal</span>
         </button>
 
+        <Tooltip text={menuOpen ? 'Close menu' : 'Open menu'}>
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -200,6 +208,7 @@ export const Header = memo(({ menuOpen, setMenuOpen, onNewNote, onDownload, mini
             )}
           </svg>
         </button>
+        </Tooltip>
       </div>
     </header>
   );

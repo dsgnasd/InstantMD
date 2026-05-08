@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Tooltip } from './Tooltip';
 
 const themeKey = 'instantmd-theme';
 
@@ -28,10 +29,11 @@ export const ThemeToggle = () => {
   }, [dark]);
 
   return (
+    <Tooltip text={dark ? 'Switch to light theme' : 'Switch to dark theme'}>
     <button
       onClick={() => setDark(!dark)}
       className="group relative w-10 h-10 rounded-xl text-stone-600 dark:text-zinc-300 hover:text-stone-900 dark:hover:text-zinc-100 hover:bg-stone-100 dark:hover:bg-white/5 transition-all duration-200"
-      aria-label="Переключить тему"
+      aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <svg
@@ -58,5 +60,6 @@ export const ThemeToggle = () => {
         </svg>
       </div>
     </button>
+    </Tooltip>
   );
 };

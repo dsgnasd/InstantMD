@@ -2,6 +2,7 @@ import { memo, useEffect, useCallback, useRef, useState } from 'react';
 import { useUndoHistory } from '../hooks/useUndoHistory';
 import { useEditorKeyboard } from '../hooks/useEditorKeyboard';
 import { DropZone } from './DropZone';
+import { Tooltip } from './Tooltip';
 import { DEFAULT_NOTE_CONTENT } from '../utils/config';
 
 type EditorProps = {
@@ -74,6 +75,7 @@ export const Editor = memo(({ value, onChange, onCopied, hideCopy }: EditorProps
         {!isEmpty && !hideCopy && (
           <div className="absolute top-2 right-2 z-10 flex items-center gap-0.5">
             {showPasteButton && (
+              <Tooltip text="Paste from clipboard" side="left">
               <button
                 onClick={handlePaste}
                 aria-label="Paste from clipboard"
@@ -87,7 +89,9 @@ export const Editor = memo(({ value, onChange, onCopied, hideCopy }: EditorProps
                   />
                 </svg>
               </button>
+              </Tooltip>
             )}
+            <Tooltip text="Copy markdown" side="left">
             <button
               onClick={handleCopy}
               aria-label="Copy markdown"
@@ -97,6 +101,7 @@ export const Editor = memo(({ value, onChange, onCopied, hideCopy }: EditorProps
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
             </button>
+            </Tooltip>
           </div>
         )}
         <textarea

@@ -21,6 +21,7 @@ export default {
       animation: {
         'fade-in': 'fadeIn 0.2s ease-out forwards',
         'fade-out': 'fadeOut 0.3s ease-out forwards',
+        'paste-appear': 'pasteAppear 0.25s ease-out forwards',
       },
       keyframes: {
         fadeIn: {
@@ -30,6 +31,10 @@ export default {
         fadeOut: {
           '0%': { opacity: '1', transform: 'translateY(0)' },
           '100%': { opacity: '0', transform: 'translateY(4px)' },
+        },
+        pasteAppear: {
+          '0%': { opacity: '0', transform: 'scale(0.5)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
         },
       },
       transitionDuration: {

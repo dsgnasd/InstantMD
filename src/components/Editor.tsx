@@ -78,7 +78,7 @@ export const Editor = memo(({ value, onChange, onCopied }: EditorProps) => {
               <button
                 onClick={handlePaste}
                 aria-label="Paste from clipboard"
-                className="p-2.5 rounded-lg text-stone-300 dark:text-zinc-600 hover:text-stone-500 dark:hover:text-zinc-300 hover:bg-stone-100 dark:hover:bg-white/5 transition-all"
+                className="p-2.5 rounded-lg text-stone-300 dark:text-zinc-600 hover:text-stone-500 dark:hover:text-zinc-300 hover:bg-stone-100 dark:hover:bg-white/5 transition-all origin-top-right animate-paste-appear"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path

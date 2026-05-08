@@ -62,7 +62,7 @@ export const DropZone = memo(({ onContent, collapsing, onCollapsed }: DropZonePr
       onTransitionEnd={(e) => {
         if (collapsing && e.propertyName === 'max-height') onCollapsed?.();
       }}
-      className={`overflow-hidden transition-all duration-400 ease-in-out ${
+      className={`overflow-hidden transition-all duration-300 ease-in-out ${
         collapsing ? 'max-h-0 opacity-0 mt-0 mx-4 sm:mx-10' : 'max-h-80 opacity-100'
       }`}
     >
@@ -71,7 +71,9 @@ export const DropZone = memo(({ onContent, collapsing, onCollapsed }: DropZonePr
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`flex flex-col items-center justify-center gap-3 mx-4 sm:mx-10 mt-4 sm:mt-6 px-6 py-6 sm:py-9 rounded-xl border-2 border-dashed transition-colors duration-200 ${
+        className={`flex flex-col items-center justify-center gap-3 mx-4 sm:mx-10 mt-4 sm:mt-6 px-6 py-6 sm:py-9 rounded-xl border-2 border-dashed origin-top-right transition-all duration-300 ease-in-out ${
+          collapsing ? 'scale-50 opacity-0' : 'scale-100 opacity-100'
+        } ${
           dragging
             ? 'border-stone-400 dark:border-zinc-400 bg-stone-100/50 dark:bg-white/5'
             : 'border-stone-200 dark:border-white/10 bg-transparent'

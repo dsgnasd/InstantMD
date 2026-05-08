@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from 'react';
+import { memo, useMemo, useEffect, useRef } from 'react';
 import { renderMarkdown } from '../utils/markdownParser';
 import { toggleTaskItem } from '../utils/toggleTaskItem';
 
@@ -9,21 +9,35 @@ type PreviewProps = {
 
 export const Preview = memo(({ value, onChange }: PreviewProps) => {
   const html = useMemo(() => renderMarkdown(value), [value]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!onChange) return;
+  // Keep mutable refs so the event listener never captures stale values
+  const onChangeRef = useRef(onChange);
+  const valueRef = useRef(value);
+  useEffect(() => { onChangeRef.current = onChange; });
+  useEffect(() => { valueRef.current = value; });
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handler = (e: MouseEvent) => {
       const target = e.target as HTMLInputElement;
-      if (target.tagName !== 'INPUT' || target.type !== 'checkbox') return;
-      e.preventDefault(); // prevent browser from toggling state — we handle it via markdown source
-      const boxes = Array.from(
-        e.currentTarget.querySelectorAll('input[type="checkbox"]'),
-      );
-      const idx = boxes.indexOf(target);
-      if (idx !== -1) onChange(toggleTaskItem(value, idx));
-    },
-    [onChange, value],
-  );
+      // Only handle clicks on task-list checkboxes
+      if (!target.classList?.contains('task-list-item-checkbox')) return;
+      // Prevent browser from toggling the native checked state;
+      // we handle state via the markdown source instead.
+      e.preventDefault();
+      const idxStr = target.getAttribute('data-task-idx');
+      if (idxStr === null) return;
+      const idx = parseInt(idxStr, 10);
+      if (!isNaN(idx)) onChangeRef.current?.(toggleTaskItem(valueRef.current, idx));
+    };
+
+    // capture:true — fires before browser processes the default checkbox-toggle action
+    container.addEventListener('click', handler, { capture: true });
+    return () => container.removeEventListener('click', handler, { capture: true });
+  }, []);          // attach once; refs carry fresh values each render
 
   if (!value.trim()) {
     return (
@@ -36,11 +50,9 @@ export const Preview = memo(({ value, onChange }: PreviewProps) => {
   }
 
   return (
-    <div
-      className="preview prose dark:prose-dark max-w-none px-4 sm:px-10 py-4 sm:py-6"
-    >
+    <div className="preview prose dark:prose-dark max-w-none px-4 sm:px-10 py-4 sm:py-6">
       {/* HTML is sanitized by renderMarkdown() via DOMPurify — safe to render */}
-      <div onClick={handleClick} dangerouslySetInnerHTML={{ __html: html }} />
+      <div ref={containerRef} dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );
 });

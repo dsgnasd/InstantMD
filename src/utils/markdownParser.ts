@@ -40,13 +40,19 @@ DOMPurify.addHook('afterSanitizeAttributes', (node) => {
 
 export const renderMarkdown = (content: string): string => {
   const html = md.render(content);
-  return DOMPurify.sanitize(html, {
+  const sanitized = DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr', 'ul', 'ol', 'li',
                    'blockquote', 'pre', 'code', 'a', 'strong', 'em', 'del', 'table',
                    'thead', 'tbody', 'tr', 'th', 'td', 'span', 'div', 'input'],
     ALLOWED_ATTR: ['href', 'title', 'class', 'target', 'rel', 'id', 'type', 'checked', 'disabled'],
     ADD_ATTR: ['rel'],
     FORBID_ATTR: ['onclick', 'onerror', 'onload'],
+  });
+  // Inject sequential data-task-idx on each task checkbox so the click handler
+  // can reliably identify which markdown item to toggle (avoids DOM-order ambiguity).
+  let taskIdx = 0;
+  return sanitized.replace(/class="task-list-item-checkbox"/g, () => {
+    return `class="task-list-item-checkbox" data-task-idx="${taskIdx++}"`;
   });
 };
 

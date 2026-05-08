@@ -69,7 +69,7 @@ export const SplitView = memo(
         style={{ width: previewWidth, display: previewHidden }}
       >
         <div className="h-full w-full max-w-[900px] mx-auto">
-          <Preview value={content} />
+          <Preview value={content} onChange={onChange} />
         </div>
       </div>
     );

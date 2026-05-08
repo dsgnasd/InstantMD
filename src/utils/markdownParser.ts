@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import taskLists from 'markdown-it-task-lists';
 import DOMPurify from 'dompurify';
 
 const md = new MarkdownIt({
@@ -7,6 +8,9 @@ const md = new MarkdownIt({
   breaks: true,
   linkify: true,
 });
+
+// Enable GFM-style task lists with clickable checkboxes
+md.use(taskLists, { enabled: true });
 
 // Add id attributes to headings for TOC navigation
 const defaultHeadingOpen = md.renderer.rules.heading_open ||
@@ -39,8 +43,8 @@ export const renderMarkdown = (content: string): string => {
   return DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr', 'ul', 'ol', 'li',
                    'blockquote', 'pre', 'code', 'a', 'strong', 'em', 'del', 'table',
-                   'thead', 'tbody', 'tr', 'th', 'td', 'span', 'div'],
-    ALLOWED_ATTR: ['href', 'title', 'class', 'target', 'rel', 'id'],
+                   'thead', 'tbody', 'tr', 'th', 'td', 'span', 'div', 'input'],
+    ALLOWED_ATTR: ['href', 'title', 'class', 'target', 'rel', 'id', 'type', 'checked', 'disabled'],
     ADD_ATTR: ['rel'],
     FORBID_ATTR: ['onclick', 'onerror', 'onload'],
   });

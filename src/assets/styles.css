@@ -202,13 +202,22 @@ body,
   padding-left: 0;
 }
 
-/* Native checkbox, custom-styled with appearance:none */
+/* Hidden input — kept in DOM for :checked sibling selector + data-task-idx */
 .preview .task-list-item-checkbox {
-  -webkit-appearance: none;
-  appearance: none;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Visual checkbox span — this is what the user sees and clicks */
+.preview .task-check-visual {
+  display: inline-block;
   width: 0.95em;
   height: 0.95em;
-  margin: 0 0.45em 0 0;
+  margin-right: 0.45em;
   vertical-align: middle;
   position: relative;
   top: -0.06em;
@@ -219,30 +228,31 @@ body,
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.preview .task-list-item-checkbox:hover {
+.preview .task-check-visual:hover {
   border-color: #a8a29e;          /* stone-400 */
 }
 
-.preview .task-list-item-checkbox:checked {
+/* Checked state via sibling selector */
+.preview .task-list-item-checkbox:checked + .task-check-visual {
   background-color: #44403c;      /* stone-700 */
   border-color: #44403c;
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyMCAyMCcgZmlsbD0nd2hpdGUnPjxwYXRoIGZpbGwtcnVsZT0nZXZlbm9kZCcgZD0nTTE2LjcwNCA0LjE1M2EuNzUuNzUgMCAwMS4xNDMgMS4wNTJsLTggMTAuNWEuNzUuNzUgMCAwMS0xLjEyNy4wNzVsLTQuNS00LjVhLjc1Ljc1IDAgMDExLjA2LTEuMDZsMy44OTQgMy44OTMgNy40OC05LjgxN2EuNzUuNzUgMCAwMTEuMDUtLjE0M3onIGNsaXAtcnVsZT0nZXZlbm9kZCcvPjwvc3ZnPg==");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 88%;
+  background-size: 80%;
 }
 
-/* Dark mode: darker fill for unchecked, light fill when checked */
-.dark .preview .task-list-item-checkbox {
+/* Dark mode */
+.dark .preview .task-check-visual {
   border-color: #3f3f46;          /* zinc-700 */
-  background-color: #18181b;      /* zinc-900 */
+  background-color: #18181b;      /* zinc-900 — darker than text bg */
 }
 
-.dark .preview .task-list-item-checkbox:hover {
+.dark .preview .task-check-visual:hover {
   border-color: #52525b;          /* zinc-600 */
 }
 
-.dark .preview .task-list-item-checkbox:checked {
+.dark .preview .task-list-item-checkbox:checked + .task-check-visual {
   background-color: #71717a;      /* zinc-500 — readable with white check */
   border-color: #71717a;
 }

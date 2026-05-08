@@ -48,11 +48,13 @@ export const renderMarkdown = (content: string): string => {
     ADD_ATTR: ['rel'],
     FORBID_ATTR: ['onclick', 'onerror', 'onload'],
   });
-  // Add data-task-idx so the click handler can identify which markdown item
-  // to toggle. The native checkbox handles its own appearance (via accent-color).
+  // Add data-task-idx and inject a visual <span> after each input.
+  // The input is hidden via CSS (background-image on inputs is unreliable);
+  // the span is the visible/styled element using `input:checked + span`.
   let taskIdx = 0;
-  return sanitized.replace(/class="task-list-item-checkbox"/g, () => {
-    return `class="task-list-item-checkbox" data-task-idx="${taskIdx++}"`;
+  return sanitized.replace(/(<input\b[^>]*class="task-list-item-checkbox"[^>]*>)/g, (match) => {
+    const withIdx = match.replace('class="task-list-item-checkbox"', `class="task-list-item-checkbox" data-task-idx="${taskIdx++}"`);
+    return `${withIdx}<span class="task-check-visual" aria-hidden="true"></span>`;
   });
 };
 

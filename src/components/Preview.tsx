@@ -23,18 +23,17 @@ export const Preview = memo(({ value, onChange }: PreviewProps) => {
 
     const handler = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (!target.classList?.contains('task-list-item-checkbox')) return;
-      // Prevent browser's default toggle — we drive state via markdown source.
-      // capture:true ensures preventDefault runs before the activation behavior.
-      e.preventDefault();
-      const idxStr = target.getAttribute('data-task-idx');
+      if (!target.classList?.contains('task-check-visual')) return;
+      // The hidden input is the previous sibling — read its data-task-idx
+      const input = target.previousElementSibling as HTMLElement | null;
+      const idxStr = input?.getAttribute('data-task-idx') ?? null;
       if (idxStr === null) return;
       const idx = parseInt(idxStr, 10);
       if (!isNaN(idx)) onChangeRef.current?.(toggleTaskItem(valueRef.current, idx));
     };
 
-    container.addEventListener('click', handler, { capture: true });
-    return () => container.removeEventListener('click', handler, { capture: true });
+    container.addEventListener('click', handler);
+    return () => container.removeEventListener('click', handler);
   }, []);          // attach once; refs carry fresh values each render
 
   if (!value.trim()) {

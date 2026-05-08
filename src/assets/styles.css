@@ -188,79 +188,69 @@ body,
 
 /* ── Task list checkboxes ─────────────────────────────────────────── */
 
-/* Top-level task list: reset padding so items align with body text */
+/* Outer task list: no extra indent */
 .preview ul.contains-task-list {
   padding-left: 0;
 }
-/* Nested task lists restore normal indentation */
+/* Nested task lists restore 1.5em indent */
 .preview ul.contains-task-list ul.contains-task-list {
   padding-left: 1.5em;
 }
 
-/* li: no bullet, reserve left space for the checkbox */
+/* li: flex row, no bullet */
 .preview li.task-list-item {
   list-style: none;
-  margin-left: 0;
-  padding-left: 1.4em;
-  position: relative;
+  margin: 0.35em 0;
+  padding-left: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
 }
 
-/* The actual <input> — invisible, sits on top for click events */
+/* Input hidden from layout — only keeps :checked state for CSS */
 .preview .task-list-item-checkbox {
-  -webkit-appearance: none;
-  appearance: none;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0.9em;
-  height: 0.9em;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-  z-index: 1;
+  display: none;
 }
 
-/* Visual proxy: the <span> rendered right after the <input> */
+/* Visual checkbox — the element the user actually sees and clicks */
 .preview .task-check-visual {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0.9em;
-  height: 0.9em;
-  border: 1.5px solid #d6d3d1;   /* stone-300 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.875em;
+  width: 0.875em;
+  height: 0.875em;
+  margin-top: 0.22em;            /* align with first line of text */
+  flex-shrink: 0;
+  border: 1.5px solid #d6d3d1;  /* stone-300 */
   border-radius: 3px;
   background-color: #ffffff;
-  pointer-events: none;
+  cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-/* Hover on unchecked */
-.preview .task-list-item-checkbox:hover + .task-check-visual {
+.preview .task-check-visual:hover {
   border-color: #a8a29e;          /* stone-400 */
 }
 
-/* Checked fill */
+/* Checked state */
 .preview .task-list-item-checkbox:checked + .task-check-visual {
   background-color: #44403c;      /* stone-700 */
   border-color: #44403c;
 }
 
-/* Checkmark via ::before on the visual span */
 .preview .task-list-item-checkbox:checked + .task-check-visual::before {
   content: '';
   display: block;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNSA1IDQgNy41IDguNSAyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNSA1IDQgNy41IDguNSAyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zj4=");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 72%;
 }
 
-/* Hover on checked */
-.preview .task-list-item-checkbox:checked:hover + .task-check-visual {
+.preview .task-list-item-checkbox:checked + .task-check-visual:hover {
   background-color: #292524;      /* stone-800 */
   border-color: #292524;
 }
@@ -271,7 +261,7 @@ body,
   background-color: transparent;
 }
 
-.dark .preview .task-list-item-checkbox:hover + .task-check-visual {
+.dark .preview .task-check-visual:hover {
   border-color: #71717a;          /* zinc-500 */
 }
 
@@ -280,7 +270,7 @@ body,
   border-color: #71717a;
 }
 
-.dark .preview .task-list-item-checkbox:checked:hover + .task-check-visual {
+.dark .preview .task-list-item-checkbox:checked + .task-check-visual:hover {
   background-color: #a1a1aa;      /* zinc-400 */
   border-color: #a1a1aa;
 }

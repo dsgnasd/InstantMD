@@ -202,22 +202,49 @@ body,
   padding-left: 0;
 }
 
-/* Native checkbox styled with accent-color + color-scheme */
+/* Native checkbox, custom-styled with appearance:none */
 .preview .task-list-item-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
   width: 0.95em;
   height: 0.95em;
   margin: 0 0.45em 0 0;
   vertical-align: middle;
   position: relative;
   top: -0.06em;
+  border: 1.5px solid #d4d4d8;    /* zinc-300 */
+  border-radius: 3px;
+  background-color: #ffffff;
   cursor: pointer;
-  color-scheme: light;
-  accent-color: #44403c;          /* stone-700 */
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
+.preview .task-list-item-checkbox:hover {
+  border-color: #a8a29e;          /* stone-400 */
+}
+
+.preview .task-list-item-checkbox:checked {
+  background-color: #44403c;      /* stone-700 */
+  border-color: #44403c;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTMuNSA4LjVsMyAzIDYtNyIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 76%;
+}
+
+/* Dark mode: darker fill for unchecked, light fill when checked */
 .dark .preview .task-list-item-checkbox {
-  color-scheme: dark;
-  accent-color: #a1a1aa;          /* zinc-400 */
+  border-color: #3f3f46;          /* zinc-700 */
+  background-color: #18181b;      /* zinc-900 */
+}
+
+.dark .preview .task-list-item-checkbox:hover {
+  border-color: #52525b;          /* zinc-600 */
+}
+
+.dark .preview .task-list-item-checkbox:checked {
+  background-color: #71717a;      /* zinc-500 — readable with white check */
+  border-color: #71717a;
 }
 
 /* ──────────────────────────────────────────────────────────────────── */

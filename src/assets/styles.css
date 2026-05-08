@@ -202,7 +202,7 @@ body,
   padding-left: 0;
 }
 
-/* Native checkbox styled with accent-color — modern, accessible, simple */
+/* Native checkbox styled with accent-color + color-scheme */
 .preview .task-list-item-checkbox {
   width: 0.95em;
   height: 0.95em;
@@ -211,10 +211,12 @@ body,
   position: relative;
   top: -0.06em;
   cursor: pointer;
+  color-scheme: light;
   accent-color: #44403c;          /* stone-700 */
 }
 
 .dark .preview .task-list-item-checkbox {
+  color-scheme: dark;
   accent-color: #a1a1aa;          /* zinc-400 */
 }
 

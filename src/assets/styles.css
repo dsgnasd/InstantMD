@@ -235,15 +235,17 @@ body,
   border-color: #44403c;
 }
 
-.preview .task-list-item-checkbox:checked + .task-check-visual::before {
+/* Checkmark via CSS borders — no images, works everywhere */
+.preview .task-list-item-checkbox:checked + .task-check-visual::after {
   content: '';
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTAgMTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEuNSA1IDQgNy41IDguNSAyLjUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS43IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 72%;
+  position: absolute;
+  left: 22%;
+  top: 8%;
+  width: 30%;
+  height: 52%;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
 }
 
 .preview .task-list-item-checkbox:checked + .task-check-visual:hover {

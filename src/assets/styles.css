@@ -188,10 +188,19 @@ body,
 
 /* ── Task list checkboxes ─────────────────────────────────────────── */
 
+/* Top-level task list: reset padding so items align with body text */
+.preview ul.contains-task-list {
+  padding-left: 0;
+}
+/* Nested task lists restore normal indentation */
+.preview ul.contains-task-list ul.contains-task-list {
+  padding-left: 1.5em;
+}
+
 /* li: no bullet, reserve left space for the checkbox */
 .preview li.task-list-item {
   list-style: none;
-  margin-left: -1.25em;
+  margin-left: 0;
   padding-left: 1.4em;
   position: relative;
 }

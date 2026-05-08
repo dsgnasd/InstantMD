@@ -48,13 +48,15 @@ export const renderMarkdown = (content: string): string => {
     ADD_ATTR: ['rel'],
     FORBID_ATTR: ['onclick', 'onerror', 'onload'],
   });
-  // Inject data-task-idx and a visual <span> sibling for each task checkbox.
-  // The <span> is used for the custom checkbox appearance (::before checkmark),
-  // since background-image on <input> is unreliable across browsers.
+  // Replace each task checkbox with: hidden input (for data-task-idx) +
+  // a visual span whose class and content reflect the checked state directly.
+  // This avoids fragile CSS sibling selectors and pseudo-element hacks.
   let taskIdx = 0;
   return sanitized.replace(/(<input\b[^>]*class="task-list-item-checkbox"[^>]*>)/g, (match) => {
+    const isChecked = /\bchecked\b/.test(match);
     const withIdx = match.replace('class="task-list-item-checkbox"', `class="task-list-item-checkbox" data-task-idx="${taskIdx++}"`);
-    return `${withIdx}<span class="task-check-visual" aria-hidden="true"></span>`;
+    const spanClass = isChecked ? 'task-check-visual task-checked' : 'task-check-visual';
+    return `${withIdx}<span class="${spanClass}" aria-hidden="true">${isChecked ? '✓' : ''}</span>`;
   });
 };
 
